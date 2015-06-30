@@ -38,8 +38,6 @@
 .thermostat .icon.up, .thermostat .icon.down,
 .music i, .themeLight, .camera, .light, .history {cursor: pointer;}
 
-.thermostat.null-setpoint .icon{cursor:default}
-
 /* reset ***********************/
 body, .ui-page{background-color:black}
 * {text-shadow:none;font-family:"Mallanna",Verdana,Arial,Helvetica,sans-serif}
@@ -98,8 +96,20 @@ html body .spinCold .ui-group-theme-a .ui-btn, .ui-page-theme-a .ui-btn{border:0
 .thermostat.null-setpoint .icon.setpoint {display: none}
 
 .thermostat.null-setpoint .icon.up, .thermostat.null-setpoint .icon.down {opacity:0.3}
+.thermostat.null-setpoint .icon{cursor:default}
 
-/**/
+.thermostat .degree {
+  font-size: 50%;
+  left: -2px;
+  position: relative;
+  top: -0.5em;
+}
+
+.thermostat[fraction="0"] .fraction {display: none;}
+
+.thermostat .fraction {font-size: 50%;}
+
+/*video*/
 
 .video-container {
 	width:99%;
