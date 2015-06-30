@@ -107,7 +107,7 @@ html body .spinCold .ui-group-theme-a .ui-btn, .ui-page-theme-a .ui-btn{border:0
 
 .thermostat[fraction="0"] .fraction {display: none;}
 
-.thermostat .fraction {font-size: 50%;}
+.thermostat .fraction {font-size: 50%; display: none;}
 
 /*video*/
 
