@@ -778,8 +778,6 @@ def getThermostatData(device, type) {
 		} catch (e) {}
 	}
 	def setpoint = roundThermostatSetpoint(type == "thermostatHeat" ? deviceData.heatingSetpoint : deviceData.coolingSetpoint)
-	log.debug "setpoint is $setpoint"
-	log.debug "deviceData.heatingSetpoint: $deviceData.heatingSetpoint" 
 	[tile: "device", type: type, device: device.id, name: device.displayName, humidity: deviceData.humidity, temperature: deviceData.temperature, thermostatFanMode: deviceData.thermostatFanMode, thermostatOperatingState: deviceData.thermostatOperatingState, setpoint: setpoint.whole, fraction: setpoint.fraction]
 }
 
@@ -793,7 +791,8 @@ def roundThermostatSetpoint(setpoint) {
 			setpoint = Math.round(setpoint * 2.0) / 2.0
 			whole = setpoint as int
 			fraction = (setpoint - whole) as int
-			log.debug "setpoint1 $setpoint ${setpoint * 2} ${setpoint * 2.0} whole $whole"
+			
+			whole = Math.round(setpoint) // remove this line when ready
 		}
 	}
 	
@@ -802,7 +801,7 @@ def roundThermostatSetpoint(setpoint) {
 
 def renderTile(data) {
 	if (data.type == "thermostatHeat" || data.type == "thermostatCool") {
-		return  """<div class="$data.type tile h2 thermostat ${data.setpoint ? "" : "null-setpoint"}" data-type="$data.type" data-scale="${getTemperatureScale()}" data-device="$data.device" data-setpoint="$data.setpoint" data-fraction="$data.fraction"><div class="title">$data.name ${getTileIcons()[data.type]}<br/><span class="title2">${data.temperature}&deg;, $data.thermostatOperatingState</span></div><div class="icon setpoint">$data.setpoint<span class="fraction">.$data.fraction</span><span class="degree">&deg;</span></div><div class="icon null-setpoint">--</div><div class="icon up"><i class="fa fa-fw fa-chevron-up"></i></div><div class="icon down"><i class="fa fa-fw fa-chevron-down"></i></div><div class="footer">&#10044; $data.thermostatFanMode ${data.humidity ? ",<i class='fa fa-fw wi wi-sprinkles'></i>" + data.humidity  + "%" : ""}</div></div>"""
+		return  """<div class="$data.type tile h2 thermostat ${data.setpoint ? "" : "null-setpoint"}" data-type="$data.type" data-scale="${getTemperatureScale()}" data-device="$data.device" data-setpoint="$data.setpoint" data-fraction="$data.fraction"><div class="title">$data.name ${getTileIcons()[data.type]}<br/><span class="title2">${data.temperature}&deg;, $data.thermostatOperatingState</span></div><div class="icon setpoint"><span class="whole">$data.setpoint</span><span class="fraction">.$data.fraction</span><span class="degree">&deg;</span></div><div class="icon null-setpoint">--</div><div class="icon up"><i class="fa fa-fw fa-chevron-up"></i></div><div class="icon down"><i class="fa fa-fw fa-chevron-down"></i></div><div class="footer">&#10044; $data.thermostatFanMode ${data.humidity ? ",<i class='fa fa-fw wi wi-sprinkles'></i>" + data.humidity  + "%" : ""}</div></div>"""
 	} else if (data.type == "weather"){
 		return """<div class="weather tile w2" data-type="weather" data-device="$data.device" data-weather="$data.weatherIcon"><div class="title">$data.city<br/><span class="title2">$data.weather, feels like $data.feelsLike&deg;</span></div><div class="icon"><span class="text">$data.temperature&deg;</span><i class="wi $data.icon"></i></span></div><div class="footer">$data.localSunrise <i class="fa fa-fw wi wi-horizon-alt"></i> $data.localSunset</div><div class="footer right">$data.percentPrecip%<i class="fa fa-fw fa-umbrella"></i><br>$data.humidity%<i class="fa fa-fw wi wi-sprinkles"></i></div></div>"""
 	} else if (data.type == "music") {
