@@ -729,7 +729,7 @@ def getDOW() {
 }
 
 def renderModeTile(data) {
-"""<div class="mode tile w2 menu ${data.isStandardMode ? encodeHTML(data.mode) : ""}" data-mode="${encodeHTML(data.mode)}" data-popup="mode-popup">
+"""<div class="mode tile w2 menu ${data.isStandardMode ? sanitizeCSSClassName(data.mode) : ""}" data-mode="${encodeHTML(data.mode)}" data-popup="mode-popup">
 	<div class="title">Mode</div>
 	<div data-role="popup" id="mode-popup" data-overlay-theme="b">
 		<ul data-role="listview" data-inset="true" style="min-width:210px;">
@@ -785,19 +785,19 @@ def getThermostatData(device, type) {
 
 def renderTile(data) {
 	if (data.type == "thermostatHeat" || data.type == "thermostatCool") {
-		return  """<div class="${encodeHTML(data.type)} tile h2" data-type="${encodeHTML(data.type)}" data-device="${encodeHTML(data.device)}" data-setpoint="${encodeHTML(data.setpoint)}"><div class="title">${encodeHTML(data.name)} ${getTileIcons()[data.type]}<br/><span class="title2">${encodeHTML(data.temperature)}&deg;, ${encodeHTML(data.thermostatOperatingState)}</span></div><div class="icon setpoint">${encodeHTML(data.setpoint)}&deg;</div><div class="icon up"><i class="fa fa-fw fa-chevron-up"></i></div><div class="icon down"><i class="fa fa-fw fa-chevron-down"></i></div><div class="footer">&#10044; ${encodeHTML(data.thermostatFanMode)} ${data.humidity ? ",<i class='fa fa-fw wi wi-sprinkles'></i>" + encodeHTML(data.humidity)  + "%" : ""}</div></div>"""
+		return  """<div class="${sanitizeCSSClassName(data.type)} tile h2" data-type="${encodeHTML(data.type)}" data-device="${encodeHTML(data.device)}" data-setpoint="${encodeHTML(data.setpoint)}"><div class="title">${encodeHTML(data.name)} ${getTileIcons()[data.type]}<br/><span class="title2">${encodeHTML(data.temperature)}&deg;, ${encodeHTML(data.thermostatOperatingState)}</span></div><div class="icon setpoint">${encodeHTML(data.setpoint)}&deg;</div><div class="icon up"><i class="fa fa-fw fa-chevron-up"></i></div><div class="icon down"><i class="fa fa-fw fa-chevron-down"></i></div><div class="footer">&#10044; ${encodeHTML(data.thermostatFanMode)} ${data.humidity ? ",<i class='fa fa-fw wi wi-sprinkles'></i>" + encodeHTML(data.humidity)  + "%" : ""}</div></div>"""
 	} else if (data.type == "weather"){
-		return """<div class="weather tile w2" data-type="weather" data-device="${encodeHTML(data.device)}" data-weather="${encodeHTML(data.weatherIcon)}"><div class="title">${encodeHTML(data.city)}<br/><span class="title2">${encodeHTML(data.weather)}, feels like ${encodeHTML(data.feelsLike)}&deg;</span></div><div class="icon"><span class="text">${encodeHTML(data.temperature)}&deg;</span><i class="wi ${encodeHTML(data.icon)}"></i></span></div><div class="footer">${encodeHTML(data.localSunrise)} <i class="fa fa-fw wi wi-horizon-alt"></i> ${encodeHTML(data.localSunset)}</div><div class="footer right">${encodeHTML(data.percentPrecip)}%<i class="fa fa-fw fa-umbrella"></i><br>${encodeHTML(data.humidity)}%<i class="fa fa-fw wi wi-sprinkles"></i></div></div>"""
+		return """<div class="weather tile w2" data-type="weather" data-device="${encodeHTML(data.device)}" data-weather="${encodeHTML(data.weatherIcon)}"><div class="title">${encodeHTML(data.city)}<br/><span class="title2">${encodeHTML(data.weather)}, feels like ${encodeHTML(data.feelsLike)}&deg;</span></div><div class="icon"><span class="text">${encodeHTML(data.temperature)}&deg;</span><i class="wi ${sanitizeCSSClassName(data.icon)}"></i></span></div><div class="footer">${encodeHTML(data.localSunrise)} <i class="fa fa-fw wi wi-horizon-alt"></i> ${encodeHTML(data.localSunset)}</div><div class="footer right">${encodeHTML(data.percentPrecip)}%<i class="fa fa-fw fa-umbrella"></i><br>${encodeHTML(data.humidity)}%<i class="fa fa-fw wi wi-sprinkles"></i></div></div>"""
 	} else if (data.type == "music") {
 		return """
-		<div class="music tile w2 ${encodeHTML(data.active)} ${data.mute ? "muted" : ""}" data-type="music" data-device="${encodeHTML(data.device)}" data-level="${encodeHTML(data.level)}" data-track-description="${encodeHTML(data.trackDescription)}" data-mute="${encodeHTML(data.mute)}">
+		<div class="music tile w2 ${sanitizeCSSClassName(data.active)} ${data.mute ? "muted" : ""}" data-type="music" data-device="${encodeHTML(data.device)}" data-level="${encodeHTML(data.level)}" data-track-description="${encodeHTML(data.trackDescription)}" data-mute="${encodeHTML(data.mute)}">
 			<div class="title"><span class="name">${encodeHTML(data.name)}</span><br/><span class='title2 track'>${encodeHTML(data.trackDescription)}</span></div>
 			<div class="icon text"><i class="fa fa-fw fa-backward back"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-fw fa-pause pause"></i><i class="fa fa-fw fa-play play"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-fw fa-forward forward"></i></div>
 			<div class="footer"><i class='fa fa-fw fa-volume-down unmuted'></i><i class='fa fa-fw fa-volume-off muted'></i></div>
 		</div>
 		"""
 	} else if (data.tile == "device") {
-		return """<div class="${encodeHTML(data.type)} tile ${encodeHTML(data.active)}" data-active="${encodeHTML(data.active)}" data-type="${encodeHTML(data.type)}" data-device="${encodeHTML(data.device)}" data-value="${encodeHTML(data.value)}" data-level="${encodeHTML(data.level)}" data-is-value="${encodeHTML(data.isValue)}"><div class="title">${encodeHTML(data.name)}</div></div>"""
+		return """<div class="${sanitizeCSSClassName(data.type)} tile ${sanitizeCSSClassName(data.active)}" data-active="${encodeHTML(data.active)}" data-type="${encodeHTML(data.type)}" data-device="${encodeHTML(data.device)}" data-value="${encodeHTML(data.value)}" data-level="${encodeHTML(data.level)}" data-is-value="${encodeHTML(data.isValue)}"><div class="title">${encodeHTML(data.name)}</div></div>"""
 	} else if (data.tile == "link") {
 		return """<div class="link tile" data-link-i="${encodeHTML(data.i)}"><div class="title">${encodeHTML(data.name)}</div><div class="icon"><a href="${encodeHTML(data.link)}" data-ajax="false" style="color:white"><i class="fa fa-th"></i></a></div></div>"""
 	} else if (data.tile == "dashboard") {
@@ -900,9 +900,9 @@ def getThemeLightIcon() {
 	icons[themeLightType] ?: [off : "<i class='inactive fa fa-fw fa-lightbulb-o st-light-off'></i>", on : "<i class='active fa fa-fw fa-lightbulb-o st-light-on'></i>", css : ""]
 }
 
-def renderListItem(data) {return """<li class="item tile ${encodeHTML(data.type)}" data-type="${encodeHTML(data.type)}" data-device="${encodeHTML(data.device)}" id="${encodeHTML(data.type)}|${encodeHTML(data.device)}">${getListIcon(data.type)}${encodeHTML(data.name)}</li>"""}
+def renderListItem(data) {return """<li class="item tile ${sanitizeCSSClassName(data.type)}" data-type="${encodeHTML(data.type)}" data-device="${encodeHTML(data.device)}" id="${encodeHTML(data.type)}|${encodeHTML(data.device)}">${getListIcon(data.type)}${encodeHTML(data.name)}</li>"""}
 
-def renderEvent(data) {return """<li class="item tile ${encodeHTML(data.deviceType)}" data-name="${encodeHTML(data.name)}" data-value="${encodeHTML(data.value)}"><div class="event-icon">${getEventIcon(data)}</div><div class="event">${encodeHTML(data.displayName)} &nbsp;<i class="fa fa-long-arrow-right"></i> ${encodeHTML(data.value)}${encodeHTML(data.unit ?: "")}</div><div class="date">${encodeHTML(formatDate(data.date))}</div></li>"""}
+def renderEvent(data) {return """<li class="item tile ${sanitizeCSSClassName(data.deviceType)}" data-name="${encodeHTML(data.name)}" data-value="${encodeHTML(data.value)}"><div class="event-icon">${getEventIcon(data)}</div><div class="event">${encodeHTML(data.displayName)} &nbsp;<i class="fa fa-long-arrow-right"></i> ${encodeHTML(data.value)}${encodeHTML(data.unit ?: "")}</div><div class="date">${encodeHTML(formatDate(data.date))}</div></li>"""}
 
 def getMusicPlayerData(device) {[tile: "device", type: "music", device: device.id, name: device.displayName, status: device.currentValue("status"), level: getDeviceLevel(device, "music"), trackDescription: device.currentValue("trackDescription"), mute: device.currentValue("mute") == "muted", active: device.currentValue("status") == "playing" ? "active" : ""]}
 
@@ -968,6 +968,13 @@ def encodeHTML(text) {
 		.replaceAll('"', '&quot;')
 		.replaceAll("'", '&#x27;')
 		.replaceAll('/', '&#x2F;')
+}
+
+def sanitizeCSSClassName(className) {
+	// Sanitize CSS class names - only allow alphanumeric, hyphens, underscores
+	// This prevents XSS while maintaining valid CSS class names
+	if (!className) return className
+	return className.toString().replaceAll(/[^a-zA-Z0-9\-_\s]/, '')
 }
 
 def sanitizeCSS(css) {
